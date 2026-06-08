@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Barcode Scanner</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- html5-qrcode Library -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        primary: '#3b82f6',
+                    },
+                    animation: {
+                        'scan-beam': 'scan 2s linear infinite',
+                        'fade-in': 'fadeIn 0.4s ease-out',
+                    },
+                    keyframes: {
+                        scan: {
+                            '0%': { top: '0%', opacity: 0 },
+                            '10%': { opacity: 1 },
+                            '90%': { opacity: 1 },
+                            '100%': { top: '100%', opacity: 0 },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(10px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Hide Library Footer */
+        a[href^="http://html5-qrcode.com"] { display: none !important; }
+        
+        #reader { width: 100%; height: 100%; object-fit: cover; border-radius: 1rem; }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Main Container -->
+    <div class="w-full max-w-3xl flex flex-col gap-6">
+        
+        <!-- 1. CAMERA INTERFACE -->
+        <div class="relative aspect-[4/3] md:aspect-video bg-black rounded-2xl shadow-2xl overflow-hidden border-2 border-slate-700">
+            
+            <!-- Laser Animation -->
+            <div id="laser" class="absolute left-0 right-0 h-1 bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] z-20 hidden animate-scan-beam pointer-events-none"></div>
+            
+            <!-- Placeholder -->
+            <div id="placeholder" class="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-900/95 text-slate-500 transition-opacity">
+                <i class="fa-solid fa-barcode text-5xl mb-4 opacity-50"></i>
+                <p class="text-lg font-medium">Kamera Mati</p>
+            </div>
+            
+            <!-- Loading -->
+            <div id="loading" class="absolute inset-0 z-30 hidden flex-col items-center justify-center bg-slate-900/95 text-primary">
+                <div class="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin mb-3"></div>
+                <p class="font-semibold animate-pulse">Memuat Kamera...</p>
+            </div>
+            
+            <!-- The Reader -->
+            <div id="reader" class="opacity-0 transition-opacity duration-500"></div>
+        </div>
+
+        <!-- 2. CONTROLS -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <button id="btn-start" class="bg-primary hover:bg-blue-500 text-white font-bold py-3 rounded-xl shadow-lg transition active:scale-95">Mulai</button>
+            <button id="btn-stop" class="hidden bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl shadow-lg transition active:scale-95">Stop</button>
+            
+            <button id="btn-torch" class="glass-panel hover:bg-slate-700 text-white font-medium py-3 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" disabled>
+                <i class="fa-regular fa-lightbulb" id="torch-icon"></i> Senter
+            </button>
+            <button id="btn-switch" class="glass-panel hover:bg-slate-700 text-white font-medium py-3 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <i class="fa-solid fa-camera-rotate"></i> Ganti
+            </button>
+            <label for="file-input" class="glass-panel hover:bg-slate-700 text-white font-medium py-3 rounded-xl transition cursor-pointer col-span-2 md:col-span-1 text-center flex items-center justify-center gap-2">
+                <i class="fa-solid fa-image"></i> Upload
+            </label>
+            <input type="file" id="file-input" accept="image/*" class="hidden">
+        </div>
+
+        <!-- 3. BETTER SCAN RESULT PANEL (Scanbarcode.net Style) -->
+        <div id="result-panel" class="hidden glass-panel rounded-xl p-1 border-t-4 border-t-primary shadow-2xl animate-fade-in">
+            <div class="bg-white/95 dark:bg-slate-900/80 p-6 md:p-8 rounded-lg">
+                
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-barcode text-primary"></i> Barcode Produk
+                </h3>
+                
+                <!-- Breakdown Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <p class="text-xs text-slate-500 uppercase font-bold mb-1">Negara (GS1)</p>
+                        <p id="res-country" class="text-lg font-mono text-green-600 dark:text-green-400 font-bold">-</p>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <p class="text-xs text-slate-500 uppercase font-bold mb-1">Kode Produsen</p>
+                        <p id="res-manufacturer" class="text-lg font-mono text-blue-600 dark:text-blue-400 font-bold">-</p>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <p class="text-xs text-slate-500 uppercase font-bold mb-1">Kode Produk</p>
+                        <p id="res-product" class="text-lg font-mono text-slate-900 dark:text-white font-bold">-</p>
+                    </div>
+                </div>
+
+                <!-- Full Barcode Display -->
+                <div class="bg-slate-100 dark:bg-black/40 p-6 rounded-lg border border-slate-200 dark:border-white/5 text-center mb-6">
+                    <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">Barcode Number</p>
+                    <input type="text" id="res-full" readonly class="w-full bg-transparent text-4xl md:text-5xl font-mono text-slate-900 dark:text-white text-center border-none focus:ring-0 p-2 outline-none font-bold tracking-wider select-all" value="-">
+                    <p class="text-xs text-primary font-bold mt-2">EAN-13 Standard</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button id="btn-copy" class="glass-panel hover:bg-slate-700 text-slate-900 dark:text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 border border-slate-300 dark:border-slate-600">
+                        <i class="fa-regular fa-copy"></i> Salin
+                    </button>
+                    <!-- SCAN LAGI BUTTON -->
+                    <button id="btn-scan-again" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 border border-slate-300 dark:border-slate-600">
+                        <i class="fa-solid fa-barcode"></i> Scan Lagi
+                    </button>
+                    <a id="btn-search" href="#" target="_blank" class="bg-primary hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-search"></i> Cari Google
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // State
+        const state = {
+            isScanning: false,
+            html5QrCode: null,
+            cameras: [],
+            currentCameraId: null,
+            isTorchOn: false
+        };
+
+        const config = { fps: 10, qrbox: { width: 250, height: 250 }, aspectRatio: 1.0 };
+        const el = id => document.getElementById(id);
+
+        // GS1 Prefix Database (Sample)
+        const GS1_PREFIXES = {
+            "890": "India",
+            "899": "Indonesia",
+            "471": "Taiwan",
+            "489": "Hong Kong",
+            "490": "Japan",
+            "690": "China"
+        };
+
+        const ui = {
+            reader: el('reader'),
+            placeholder: el('placeholder'),
+            loading: el('loading'),
+            laser: el('laser'),
+            btnStart: el('btn-start'),
+            btnStop: el('btn-stop'),
+            btnTorch: el('btn-torch'),
+            torchIcon: el('torch-icon'),
+            btnSwitch: el('btn-switch'),
+            fileInput: el('file-input'),
+            resultPanel: el('result-panel'),
+            resFull: el('res-full'),
+            resCountry: el('res-country'),
+            resManufacturer: el('res-manufacturer'),
+            resProduct: el('res-product'),
+            btnCopy: el('btn-copy'),
+            btnScanAgain: el('btn-scan-again'),
+            btnSearch: el('btn-search'),
+        };
+
+        // Audio Beep
+        const playBeep = () => {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.1);
+            } catch(e){}
+        };
+
+        // --- SCANNER FUNCTIONS ---
+
+        async function startScanner() {
+            ui.btnStart.classList.add('hidden');
+            ui.btnStop.classList.remove('hidden');
+            ui.placeholder.classList.add('hidden');
+            ui.loading.classList.remove('hidden');
+            ui.resultPanel.classList.add('hidden'); // Hide previous result
+
+            try {
+                if (state.cameras.length === 0) {
+                    state.cameras = await Html5Qrcode.getCameras();
+                }
+                let cameraId = null;
+                if (state.cameras && state.cameras.length) {
+                    const backCam = state.cameras.find(c => c.label.toLowerCase().includes('back') || c.label.toLowerCase().includes('environment'));
+                    cameraId = (backCam && !state.currentCameraId) ? backCam.id : (state.cameras[0].id);
+                    state.currentCameraId = cameraId;
+                }
+                const cameraConfig = cameraId ? { deviceId: { exact: cameraId } } : { facingMode: "environment" };
+
+                await state.html5QrCode.start(cameraConfig, config, onScanSuccess, onScanFailure);
+                
+                ui.loading.classList.add('hidden');
+                ui.reader.classList.remove('opacity-0');
+                ui.laser.classList.remove('hidden');
+                
+                ui.btnSwitch.disabled = false;
+                ui.btnTorch.disabled = false;
+                state.isScanning = true;
+
+            } catch (err) {
+                stopScannerUI();
+                alert("Gagal akses kamera. Izinkan perizinan browser.");
+            }
+        }
+
+        async function stopScanner() {
+            if (!state.isScanning) return;
+            try {
+                await state.html5QrCode.stop();
+                stopScannerUI();
+            } catch (err) {}
+        }
+
+        function stopScannerUI() {
+            state.isScanning = false;
+            state.isTorchOn = false;
+            updateTorchUI();
+            ui.reader.classList.add('opacity-0');
+            ui.laser.classList.add('hidden');
+            ui.loading.classList.add('hidden');
+            ui.placeholder.classList.remove('hidden');
+            ui.btnStart.classList.remove('hidden');
+            ui.btnStop.classList.add('hidden');
+            ui.btnSwitch.disabled = true;
+            ui.btnTorch.disabled = true;
+        }
+
+        async function switchCamera() {
+            if (!state.cameras || state.cameras.length < 2) return;
+            const currentIndex = state.cameras.findIndex(c => c.id === state.currentCameraId);
+            const nextIndex = (currentIndex + 1) % state.cameras.length;
+            state.currentCameraId = state.cameras[nextIndex].id;
+            await stopScanner();
+            setTimeout(startScanner, 100);
+        }
+
+        async function toggleTorch() {
+            if (!state.isScanning) return;
+            state.isTorchOn = !state.isTorchOn;
+            try {
+                await state.html5QrCode.applyVideoConstraints({ advanced: [{ torch: state.isTorchOn }] });
+                updateTorchUI();
+            } catch (err) {
+                state.isTorchOn = false;
+                updateTorchUI();
+            }
+        }
+
+        function updateTorchUI() {
+            if (state.isTorchOn) {
+                ui.torchIcon.classList.remove('fa-regular');
+                ui.torchIcon.classList.add('fa-solid');
+                ui.btnTorch.classList.add('text-yellow-400', 'border-yellow-400');
+            } else {
+                ui.torchIcon.classList.remove('fa-solid');
+                ui.torchIcon.classList.add('fa-regular');
+                ui.btnTorch.classList.remove('text-yellow-400', 'border-yellow-400');
+            }
+        }
+
+        function handleFileUpload(e) {
+            if (e.target.files.length === 0) return;
+            const file = e.target.files[0];
+            ui.resultPanel.classList.add('hidden');
+            ui.loading.classList.remove('hidden');
+            ui.placeholder.classList.add('hidden');
+            ui.reader.classList.remove('opacity-0');
+
+            state.html5QrCode.scanFile(file, true)
+                .then(decodedText => {
+                    onScanSuccess(decodedText);
+                    ui.loading.classList.add('hidden');
+                    ui.reader.classList.add('opacity-0');
+                    ui.placeholder.classList.remove('hidden');
+                })
+                .catch(err => {
+                    ui.loading.classList.add('hidden');
+                    ui.reader.classList.add('opacity-0');
+                    ui.placeholder.classList.remove('hidden');
+                    alert("Tidak ada kode ditemukan");
+                });
+            e.target.value = '';
+        }
+
+        // --- RESULT LOGIC (Better Scan Code) ---
+
+        function onScanSuccess(decodedText, decodedResult) {
+            playBeep();
+            
+            const code = decodedText;
+            ui.resultPanel.classList.remove('hidden');
+            ui.resFull.value = code;
+
+            // Breakdown Logic
+            let country = "Unknown";
+            let manufacturer = "-";
+            let product = "-";
+
+            if (/^\d+$/.test(code)) { // Check if Numeric Barcode
+                const prefix = code.substring(0, 3);
+                country = GS1_PREFIXES[prefix] || "Lainnya (" + prefix + ")";
+                
+                if (code.length >= 12) {
+                    manufacturer = code.substring(3, 8); // Indices 4-8
+                    product = code.substring(8, code.length - 1); // Indices 9-12
+                }
+            } else {
+                country = "QR / Text Data";
+            }
+
+            ui.resCountry.innerText = country;
+            ui.resManufacturer.innerText = manufacturer;
+            ui.resProduct.innerText = product;
+            ui.btnSearch.href = `https://www.google.com/search?q=${encodeURIComponent(code)}`;
+        }
+
+        function onScanFailure(error) {}
+
+        // --- BUTTON LISTENERS ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            state.html5QrCode = new Html5Qrcode("reader");
+            
+            ui.btnStart.addEventListener('click', startScanner);
+            ui.btnStop.addEventListener('click', stopScanner);
+            ui.btnSwitch.addEventListener('click', switchCamera);
+            ui.btnTorch.addEventListener('click', toggleTorch);
+            ui.fileInput.addEventListener('change', handleFileUpload);
+            ui.btnCopy.addEventListener('click', () => {
+                ui.resFull.select();
+                document.execCommand('copy');
+                alert("Disalin ke clipboard!");
+            });
+            
+            // SCAN LAGI LOGIC
+            ui.btnScanAgain.addEventListener('click', () => {
+                ui.resultPanel.classList.add('hidden');
+                if (!state.isScanning) {
+                    startScanner();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
