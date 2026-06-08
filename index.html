@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    
+    <title>ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026 - Gratis & Terpercaya</title>
+    <meta name="title" content="ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026 - Gratis & Terpercaya">
+    <meta name="description" content="ScanBarcode Pro adalah pemindai barcode #1 di Indonesia. Scan QR code & barcode online gratis. Live camera scanner, generator QR, 50+ format. 100% privat.">
+    <meta name="keywords" content="scanbarcode pro, scanbarcode, pemindai barcode indonesia, scan barcode online, barcode scanner, scan qr code, pemindai qr, barcode reader, scanbarcode gratis">
+    <meta name="author" content="ScanBarcode Pro Indonesia">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="id">
+    <meta name="geo.country" content="ID">
+    <meta name="theme-color" content="#2563eb">
+    
+    <meta property="og:title" content="ScanBarcode Pro | Pemindai Barcode #1 di Indonesia 2026">
+    <meta property="og:description" content="ScanBarcode - Pemindai barcode #1 di Indonesia. Gratis, cepat, 100% privat.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="id_ID">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root{--bg:#f8fafc;--text:#1e293b;--card:#ffffff;--border:#e5e7eb;--primary:#2563eb;--secondary:#7c3aed;--hover:#eff6ff;--accent:#f97316}
+        .dark{--bg:#0f172a;--text:#e2e8f0;--card:#1e293b;--border:#334155;--hover:#1e3a5f}
+        
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:all 0.3s;line-height:1.7}
+        
+        .navbar{background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
+        .nav-container{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:64px}
+        .logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none;color:var(--text)}
+        .logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#2563eb,#7c3aed);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:700}
+        .logo-text{font-size:19px;font-weight:800}.logo-text span{color:#2563eb}
+        .logo-sub{font-size:9px;color:#9ca3af;letter-spacing:1px;margin-top:-2px}
+        
+        .nav-links{display:flex;gap:2px;list-style:none}
+        .nav-links a{padding:8px 13px;border-radius:8px;text-decoration:none;color:var(--text);font-size:13px;font-weight:600;transition:all 0.2s;white-space:nowrap}
+        .nav-links a:hover{background:var(--hover);color:#2563eb}
+        
+        .menu-btn{width:40px;height:40px;border-radius:10px;border:none;background:transparent;cursor:pointer;font-size:24px;display:none;align-items:center;justify-content:center;color:var(--text)}
+        .theme-btn{width:40px;height:40px;border-radius:50%;border:none;background:transparent;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text)}
+        
+        .main-content{max-width:1200px;margin:0 auto;padding:24px 16px 50px;min-height:80vh}
+        
+        .page-section{display:none}.page-section.active{display:block;animation:fadeIn 0.5s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+        
+        .hero{text-align:center;padding:60px 0 50px}
+        .hero h1{font-size:clamp(2rem,5vw,4rem);font-weight:900;line-height:1.15;margin-bottom:18px;background:linear-gradient(135deg,#2563eb,#7c3aed,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero .subtitle{font-size:18px;color:#6b7280;max-width:800px;margin:0 auto 30px;line-height:1.8}
+        
+        .btn{display:inline-block;padding:15px 32px;border-radius:12px;font-weight:700;font-size:16px;cursor:pointer;border:none;text-decoration:none;transition:all 0.3s;text-align:center}
+        .btn-primary{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,99,235,0.35)}
+        .btn-outline{background:var(--card);border:2px solid var(--border);color:var(--text)}
+        .btn-outline:hover{border-color:#2563eb}
+        .btn-success{background:#10b981;color:#fff}
+        .btn-danger{background:#ef4444;color:#fff}
+        .btn-dark{background:#374151;color:#fff}
+        .btn-sm{padding:8px 16px;font-size:13px;border-radius:8px}
+        
+        .card{background:var(--card);border-radius:16px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid var(--border);transition:all 0.3s}
+        .card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.08)}
+        
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:35px 0}
+        .stat-card{background:var(--card);border-radius:16px;padding:24px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid var(--border)}
+        .stat-number{font-size:38px;font-weight:900}.stat-label{color:#6b7280;font-size:14px;margin-top:4px}
+        
+        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:35px 0}
+        .scanner-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px}
+        .gen-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+        .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
+        
+        .scanner-box{background:#000;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:16/9;box-shadow:0 20px 50px rgba(0,0,0,0.3)}
+        .scanner-box video{width:100%;height:100%;object-fit:cover}
+        
+        .blog-card{background:var(--card);border-radius:16px;overflow:hidden;cursor:pointer;border:1px solid var(--border);transition:all 0.3s;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+        .blog-card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,0.1)}
+        .blog-img{height:240px;background-size:cover;background-position:center;display:flex;align-items:flex-end;padding:24px;color:#fff;font-weight:800;font-size:20px;position:relative;overflow:hidden;line-height:1.3}
+        .blog-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:65%;background:linear-gradient(transparent,rgba(0,0,0,0.8))}
+        .blog-img span{position:relative;z-index:1}
+        .blog-info{padding:20px}
+        .blog-cat{font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:0.5px}
+        .blog-title{font-size:18px;font-weight:700;margin:8px 0;line-height:1.4;color:var(--text)}
+        .blog-date{font-size:13px;color:#9ca3af}
+        
+        .mobile-menu{background:var(--card);border-top:1px solid var(--border);padding:8px;display:none}
+        .mobile-menu.open{display:block}
+        .mobile-menu a{display:block;padding:14px 18px;font-weight:600;text-decoration:none;color:var(--text);border-radius:8px;font-size:15px}
+        .mobile-menu a:hover{background:var(--hover)}
+        
+        .result-box{min-height:200px;display:flex;align-items:center;justify-content:center;background:var(--bg);border:2px dashed var(--border);border-radius:12px;padding:20px;text-align:center;transition:all 0.3s}
+        .result-box.success{background:#f0fdf4;border-color:#10b981;border-style:solid}
+        
+        .footer{background:var(--card);border-top:1px solid var(--border);padding:28px;text-align:center;font-size:13px;color:#9ca3af}
+        
+        .prose{max-width:900px;line-height:1.9}.prose h2{font-size:1.8rem;font-weight:800;margin:30px 0 16px;color:#2563eb}
+        .prose h3{font-size:1.4rem;font-weight:700;margin:24px 0 12px}.prose p{margin-bottom:16px;font-size:15px}
+        .prose ul,.prose ol{margin:16px 0;padding-left:24px}.prose li{margin-bottom:10px;font-size:15px}
+        .prose .highlight{background:var(--hover);padding:20px;border-left:4px solid #2563eb;border-radius:8px;margin:20px 0}
+        .prose table{width:100%;border-collapse:collapse;margin:16px 0}
+        .prose th,.prose td{border:1px solid var(--border);padding:10px 14px;text-align:left;font-size:14px}
+        .prose th{background:var(--hover);font-weight:700}
+        
+        .toast{position:fixed;top:20px;right:20px;z-index:200;padding:14px 22px;border-radius:12px;color:#fff;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.2);animation:slideIn 0.4s}
+        @keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+        
+        .hidden{display:none!important}
+        
+        @media(max-width:768px){
+            .nav-links{display:none}.menu-btn{display:flex}
+            .stats-grid{grid-template-columns:repeat(2,1fr)}
+            .features-grid{grid-template-columns:1fr}
+            .scanner-grid,.gen-grid{grid-template-columns:1fr}
+            .hero h1{font-size:1.9rem}.hero{padding:30px 0 20px}
+            .blog-img{height:180px;font-size:17px}
+            .prose h2{font-size:1.4rem}.prose h3{font-size:1.1rem}
+            .blog-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+
+<div id="toastContainer"></div>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo" onclick="showPage('home');return false">
+            <div class="logo-icon">📷</div>
+            <div><div class="logo-text">ScanBarcode<span>Pro</span></div><div class="logo-sub">#1 INDONESIA 2026</div></div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showPage('home');return false">🏠 Beranda</a></li>
+            <li><a href="#" onclick="showPage('scanner');return false">📷 Pemindai</a></li>
+            <li><a href="#" onclick="showPage('generator');return false">🔧 Generator</a></li>
+            <li><a href="#" onclick="showPage('riwayat');return false">📋 Riwayat</a></li>
+            <li><a href="#" onclick="showPage('blog');return false">📚 Blog</a></li>
+            <li><a href="#" onclick="showPage('tentang');return false">ℹ️ Tentang</a></li>
+            <li><a href="#" onclick="showPage('kontak');return false">📧 Kontak</a></li>
+        </ul>
+        <div style="display:flex;align-items:center;gap:8px">
+            <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Dark Mode">🌙</button>
+            <button class="menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </div>
+    <div id="mobileMenu" class="mobile-menu">
+        <a href="#" onclick="showPage('home');return false">🏠 Beranda</a>
+        <a href="#" onclick="showPage('scanner');return false">📷 Pemindai Live Camera</a>
+        <a href="#" onclick="showPage('generator');return false">🔧 Generator QR & Barcode</a>
+        <a href="#" onclick="showPage('riwayat');return false">📋 Riwayat Pemindaian</a>
+        <a href="#" onclick="showPage('blog');return false">📚 Blog & Artikel</a>
+        <a href="#" onclick="showPage('tentang');return false">ℹ️ Tentang ScanBarcode</a>
+        <a href="#" onclick="showPage('kontak');return false">📧 Hubungi Kami</a>
+    </div>
+</nav>
+
+<div class="main-content">
+
+    <!-- ===== HOME PAGE - BIG ===== -->
+    <div id="home" class="page-section active">
+        <div class="hero">
+            <h1>ScanBarcode Pro<br>Pemindai Barcode #1 di Indonesia</h1>
+            <p class="subtitle"><strong>ScanBarcode Pro</strong> adalah platform pemindai barcode dan QR code online terdepan di Indonesia. ScanBarcode menyediakan layanan scanning gratis, super cepat dengan teknologi AI-powered detection, dan 100% privat. Dipercaya oleh jutaan pengguna di seluruh Indonesia, ScanBarcode hadir untuk memenuhi semua kebutuhan pemindaian barcode Anda.</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+                <button class="btn btn-primary" onclick="showPage('scanner')">📷 Mulai Scan dengan ScanBarcode</button>
+                <button class="btn btn-outline" onclick="showPage('generator')">🔧 Buat QR Code di ScanBarcode</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number" style="color:#2563eb">5M+</div><div class="stat-label">Pemindaian ScanBarcode</div></div>
+            <div class="stat-card"><div class="stat-number" style="color:#7c3aed">#1</div><div class="stat-label">Scanner Indonesia</div></div>
+            <div class="stat-card"><div class="stat-number" style="color:#10b981">50+</div><div class="stat-label">Format Barcode</div></div>
+            <div class="stat-card"><div class="stat-number" style="color:#f97316">4.9★</div><div class="stat-label">Rating ScanBarcode</div></div>
+        </div>
+
+        <div class="features-grid">
+            <div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🔒</div><h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px">ScanBarcode 100% Privat</h3><p style="color:#6b7280;font-size:14px">ScanBarcode memproses semua data di browser Anda. Tidak ada upload ke server.</p></div>
+            <div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">🤖</div><h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px">ScanBarcode AI Detection</h3><p style="color:#6b7280;font-size:14px">ScanBarcode auto-detect URL, WiFi, Email, Phone, Product Code.</p></div>
+            <div class="card" style="text-align:center"><div style="font-size:3rem;margin-bottom:12px">⚡</div><h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px">ScanBarcode Super Cepat</h3><p style="color:#6b7280;font-size:14px">ScanBarcode pakai WebAssembly. Hasil dalam milidetik.</p></div>
+        </div>
+
+        <div class="card prose" style="margin-top:30px">
+            <h2>📱 Apa itu ScanBarcode Pro?</h2>
+            <p><strong>ScanBarcode Pro</strong> adalah platform pemindai barcode dan QR code online <strong>#1 di Indonesia</strong>. ScanBarcode menyediakan layanan scanning yang gratis, super cepat, dan 100% privat. Sejak diluncurkan, ScanBarcode telah dipercaya oleh jutaan pengguna di seluruh Indonesia untuk berbagai kebutuhan pemindaian barcode.</p>
+            <p>ScanBarcode menggunakan teknologi <strong>WebAssembly</strong> dan <strong>ZXing</strong> untuk memproses pemindaian secara lokal di browser Anda. Dengan ScanBarcode, data Anda <strong>TIDAK PERNAH</strong> dikirim ke server manapun.</p>
+            
+            <h3>🔍 Bagaimana ScanBarcode Bekerja?</h3>
+            <p>ScanBarcode bekerja sangat sederhana:</p>
+            <ol><li><strong>Buka ScanBarcode:</strong> Akses website ScanBarcode melalui browser</li><li><strong>Izinkan Kamera:</strong> Klik "Mulai Scan" di ScanBarcode</li><li><strong>Arahkan ke Barcode:</strong> ScanBarcode mendeteksi dalam milidetik!</li></ol>
+            
+            <h3>✅ Format Didukung ScanBarcode</h3>
+            <p>ScanBarcode mendukung <strong>50+ format barcode</strong>: EAN-13, EAN-8, UPC-A, UPC-E, Code128, Code39, Code93, ITF-14, QR Code, DataMatrix, PDF417, Aztec Code, WiFi QR, vCard, ISBN, ISSN, dan masih banyak lagi.</p>
+            
+            <div class="highlight"><strong>💡 Tips ScanBarcode:</strong> ScanBarcode juga bisa memindai barcode dari file gambar! Upload foto barcode dan ScanBarcode akan mendeteksinya otomatis.</div>
+            
+            <h3>🏢 Aplikasi Bisnis ScanBarcode</h3>
+            <p>ScanBarcode digunakan oleh berbagai sektor di Indonesia:</p>
+            <ul><li><strong>Ritel:</strong> Pemindaian harga dengan ScanBarcode EAN/UPC</li><li><strong>Logistik:</strong> Tracking paket dengan ScanBarcode Code128</li><li><strong>UMKM:</strong> Pembayaran QRIS via ScanBarcode</li><li><strong>Farmasi:</strong> Verifikasi obat dengan ScanBarcode</li><li><strong>Perpustakaan:</strong> Manajemen buku dengan ScanBarcode ISBN</li></ul>
+
+            <h3>📊 Perbandingan ScanBarcode dengan Scanner Lain</h3>
+            <table>
+                <tr><th>Fitur</th><th>ScanBarcode Pro</th><th>Scanner Lain</th></tr>
+                <tr><td>Privasi</td><td>✅ 100% Client-side</td><td>❌ Upload ke server</td></tr>
+                <tr><td>Format</td><td>✅ 50+ format</td><td>❌ 10-20 format</td></tr>
+                <tr><td>AI Detection</td><td>✅ Auto-detect</td><td>❌ Manual</td></tr>
+                <tr><td>Harga</td><td>✅ Gratis selamanya</td><td>❌ Berbayar</td></tr>
+                <tr><td>Bahasa</td><td>✅ Indonesia</td><td>❌ English only</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== SCANNER PAGE - BIG ===== -->
+    <div id="scanner" class="page-section">
+        <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:16px">📷 ScanBarcode - Pemindai Live Camera</h2>
+        <div class="scanner-grid">
+            <div>
+                <div class="scanner-box"><div id="reader" style="width:100%;height:100%"></div></div>
+                <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+                    <button id="btnStart" class="btn btn-primary" onclick="startScanner()">▶ Mulai Kamera Live ScanBarcode</button>
+                    <button id="btnStop" class="btn btn-danger hidden" onclick="stopScanner()">⏹ Stop Kamera</button>
+                </div>
+                <div class="card" style="margin-top:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <label style="cursor:pointer;padding:10px 16px;background:var(--bg);border-radius:8px;font-weight:500;font-size:14px;border:1px solid var(--border)">🖼️ ScanBarcode dari Gambar<input type="file" accept="image/*" style="display:none" onchange="scanImageFile(this)"></label>
+                    <span id="scanStatus" style="font-size:13px;padding:6px 12px;border-radius:50px;background:var(--bg);border:1px solid var(--border)">⚪ Kamera Mati</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:14px">📋 Hasil ScanBarcode</h3>
+                <div id="resultDisplay" class="result-box"><div><div style="font-size:3rem;margin-bottom:8px">📷</div><p style="font-size:14px">Arahkan kamera ke barcode</p><p style="font-size:11px;color:#9ca3af">ScanBarcode akan mendeteksi otomatis</p></div></div>
+                <div id="resultActions" style="margin-top:12px;display:none;flex-direction:column;gap:8px"></div>
+                <div id="resultInfo" style="margin-top:10px;display:none;padding:10px;background:var(--hover);border-left:3px solid #2563eb;border-radius:6px;font-size:12px"></div>
+                <div id="productSearch" style="margin-top:10px;display:none"></div>
+            </div>
+        </div>
+        <div class="card prose" style="margin-top:24px">
+            <h2>📷 Cara Menggunakan Pemindai ScanBarcode</h2>
+            <p>ScanBarcode menyediakan pemindai live camera yang sangat mudah digunakan:</p>
+            <ol><li><strong>Klik "Mulai Kamera Live ScanBarcode":</strong> Tombol biru akan mengaktifkan kamera</li><li><strong>Izinkan Akses Kamera:</strong> Browser akan meminta izin - klik "Izinkan"</li><li><strong>Arahkan ke Barcode:</strong> Posisikan barcode dalam area pemindaian ScanBarcode</li><li><strong>Hasil Instan:</strong> ScanBarcode mendeteksi dan menampilkan hasil dalam milidetik</li></ol>
+            <div class="highlight"><strong>💡 Tips ScanBarcode:</strong> Pastikan pencahayaan cukup. ScanBarcode bisa scan dari berbagai sudut.</div>
+            <h3>📱 ScanBarcode di Mobile</h3>
+            <p>ScanBarcode dioptimalkan untuk smartphone. Buka ScanBarcode di browser HP Anda dan langsung scan!</p>
+            <h3>🖼️ ScanBarcode dari Gambar</h3>
+            <p>ScanBarcode juga bisa memindai dari file gambar. Upload foto barcode dan ScanBarcode akan mendeteksinya.</p>
+        </div>
+    </div>
+
+    <!-- ===== GENERATOR PAGE - BIG ===== -->
+    <div id="generator" class="page-section">
+        <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:16px">🔧 ScanBarcode - Generator QR & Barcode</h2>
+        <div class="card" style="padding:0;overflow:hidden">
+            <div style="display:flex;border-bottom:1px solid var(--border)">
+                <button onclick="switchGenTab('qr')" id="tabQr" style="flex:1;padding:14px;font-weight:700;border:none;cursor:pointer;background:var(--hover);color:#2563eb;font-size:15px">📱 ScanBarcode QR Generator</button>
+                <button onclick="switchGenTab('barcode')" id="tabBc" style="flex:1;padding:14px;font-weight:700;border:none;cursor:pointer;background:var(--card);color:var(--text);font-size:15px">📊 ScanBarcode Barcode Generator</button>
+            </div>
+            <div style="padding:20px" class="gen-grid">
+                <div id="genControls" style="display:flex;flex-direction:column;gap:10px"></div>
+                <div style="background:var(--bg);border-radius:10px;padding:20px;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                    <div id="genPreview" style="background:#fff;padding:20px;border-radius:8px;margin-bottom:12px;min-width:200px;min-height:200px;display:flex;align-items:center;justify-content:center"><span style="color:#9ca3af">Preview ScanBarcode</span></div>
+                    <button id="btnDownload" class="btn btn-primary hidden" style="padding:10px 20px">💾 Unduh dari ScanBarcode</button>
+                </div>
+            </div>
+        </div>
+        <div class="card prose" style="margin-top:24px">
+            <h2>🔧 Generator QR Code & Barcode - ScanBarcode Pro</h2>
+            <p>ScanBarcode menyediakan generator lengkap untuk membuat QR code dan barcode:</p>
+            <h3>📱 ScanBarcode QR Generator</h3>
+            <p>Gunakan ScanBarcode QR Generator untuk membuat: <strong>URL website, teks, WiFi login, vCard kontak, email, SMS,</strong> dan banyak lagi.</p>
+            <h3>📊 ScanBarcode Barcode Generator</h3>
+            <p>ScanBarcode mendukung pembuatan barcode: <strong>Code128, EAN-13, UPC-A, Code39, ITF-14</strong> untuk retail, logistik, dan inventori.</p>
+            <div class="highlight"><strong>💡 Tips ScanBarcode:</strong> Kode yang dibuat dengan ScanBarcode bisa langsung diunduh dalam format PNG atau SVG.</div>
+        </div>
+    </div>
+
+    <!-- ===== RIWAYAT PAGE ===== -->
+    <div id="riwayat" class="page-section">
+        <div class="card" style="padding:0;overflow:hidden">
+            <div style="padding:18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+                <h2 style="font-size:1.2rem;font-weight:700">📋 Riwayat Pemindaian ScanBarcode</h2>
+                <div style="display:flex;gap:8px"><button onclick="exportHistory()" class="btn btn-primary btn-sm">📥 Export CSV</button><button onclick="clearHistory()" class="btn btn-danger btn-sm">🗑 Hapus</button></div>
+            </div>
+            <div id="historyList" style="padding:14px;max-height:450px;overflow-y:auto"></div>
+            <div id="historyEmpty" style="padding:60px;text-align:center;color:#9ca3af"><div style="font-size:3rem;margin-bottom:10px">📭</div><p>Belum ada riwayat ScanBarcode</p><p style="font-size:13px">Mulai scan dengan ScanBarcode untuk melihat riwayat</p></div>
+        </div>
+    </div>
+
+    <!-- ===== BLOG PAGE - BIG WITH IMAGES ===== -->
+    <div id="blog" class="page-section">
+        <h2 style="font-size:2rem;font-weight:800;margin-bottom:8px">📚 Blog ScanBarcode</h2>
+        <p style="color:#6b7280;margin-bottom:28px;font-size:16px">Artikel lengkap tentang ScanBarcode, teknologi scanning, QR code, barcode, dan tips bisnis</p>
+        <div class="blog-grid" id="blogGrid"></div>
+        <div class="card prose" style="margin-top:30px">
+            <h2>📚 Mengapa Membaca Blog ScanBarcode?</h2>
+            <p>Blog ScanBarcode menyediakan informasi terkini seputar teknologi barcode, QR code, dan tips menggunakan ScanBarcode untuk bisnis Anda. Artikel di blog ScanBarcode ditulis oleh tim ahli untuk membantu Anda memahami dunia scanning.</p>
+            <p>ScanBarcode berkomitmen untuk mengedukasi pengguna Indonesia tentang manfaat dan cara menggunakan teknologi barcode dalam kehidupan sehari-hari maupun bisnis.</p>
+        </div>
+    </div>
+
+    <!-- ===== TENTANG PAGE - BIG ===== -->
+    <div id="tentang" class="page-section">
+        <div class="card prose" style="max-width:900px;margin:0 auto">
+            <h1 style="font-size:2.2rem;font-weight:800;margin-bottom:24px;color:var(--text)">ℹ️ Tentang ScanBarcode Pro</h1>
+            
+            <h2>Sejarah ScanBarcode</h2>
+            <p><strong>ScanBarcode Pro</strong> didirikan pada tahun 2023 dengan visi menjadi pemindai barcode <strong>#1 di Indonesia</strong>. Berawal dari kebutuhan akan scanner online yang privat dan gratis, ScanBarcode kini telah melayani lebih dari 5 juta pemindaian di seluruh Indonesia.</p>
+            <p>ScanBarcode terus berkembang dan berinovasi untuk memberikan pengalaman scanning terbaik bagi pengguna di Indonesia.</p>
+            
+            <h2>Misi ScanBarcode</h2>
+            <p>ScanBarcode berkomitmen menyediakan akses teknologi pemindaian barcode dan QR code terbaik untuk masyarakat Indonesia secara <strong>gratis</strong>, tanpa mengorbankan <strong>privasi</strong>.</p>
+            
+            <h2>Teknologi ScanBarcode</h2>
+            <p>ScanBarcode dibangun dengan teknologi modern:</p>
+            <ul><li><strong>WebAssembly:</strong> Performa super cepat</li><li><strong>ZXing:</strong> Library decoding barcode terbaik</li><li><strong>QRCode.js:</strong> Generator QR client-side</li><li><strong>JsBarcode:</strong> Generator barcode 1D</li><li><strong>HTML5 Camera API:</strong> Live camera scanning</li></ul>
+            
+            <h2>Mengapa ScanBarcode #1 di Indonesia?</h2>
+            <ul><li>✅ 5M+ pemindaian sukses</li><li>✅ 50+ format barcode</li><li>✅ AI-powered smart detection</li><li>✅ 100% client-side processing</li><li>✅ Full Bahasa Indonesia</li><li>✅ Gratis selamanya</li><li>✅ Tanpa install aplikasi</li><li>✅ Bekerja di semua perangkat</li></ul>
+            
+            <h2>Tim ScanBarcode</h2>
+            <p>ScanBarcode dikembangkan oleh tim developer Indonesia yang passionate tentang teknologi scanning, privasi data, dan open-source. ScanBarcode percaya bahwa teknologi terbaik harus bisa diakses oleh semua orang.</p>
+            
+            <h2>Visi ScanBarcode 2026-2030</h2>
+            <p>ScanBarcode berencana untuk terus mengembangkan fitur-fitur baru termasuk AI-enhanced scanning, integrasi dengan sistem bisnis, dan ekspansi ke lebih banyak platform.</p>
+        </div>
+    </div>
+
+    <!-- ===== KONTAK PAGE - BIG ===== -->
+    <div id="kontak" class="page-section">
+        <div class="card prose" style="max-width:900px;margin:0 auto">
+            <h1 style="font-size:2.2rem;font-weight:800;margin-bottom:24px;color:var(--text)">📧 Hubungi ScanBarcode Pro</h1>
+            <p>Punya pertanyaan tentang ScanBarcode? Ingin kerjasama atau memberikan masukan? Hubungi tim ScanBarcode:</p>
+            
+            <div class="highlight"><strong>📧 Email ScanBarcode:</strong> support@scanbarcodepro.com</div>
+            <div class="highlight"><strong>🐦 Twitter ScanBarcode:</strong> @scanbarcodepro</div>
+            <div class="highlight"><strong>🌐 Website ScanBarcode:</strong> scanbarcodepro.com</div>
+            
+            <h3>📋 Formulir Kontak ScanBarcode</h3>
+            <p>Kirim email ke alamat di atas. Tim ScanBarcode merespon dalam 1x24 jam.</p>
+            
+            <h3>🤝 Kerjasama dengan ScanBarcode</h3>
+            <p>ScanBarcode terbuka untuk kerjasama. Hubungi melalui email partnership ScanBarcode.</p>
+            
+            <h3>❓ FAQ ScanBarcode</h3>
+            <p><strong>Q: Apakah ScanBarcode gratis?</strong><br>A: Ya, ScanBarcode 100% gratis selamanya!</p>
+            <p><strong>Q: Apakah data aman di ScanBarcode?</strong><br>A: Sangat aman! ScanBarcode tidak mengupload data apapun.</p>
+            <p><strong>Q: Format apa saja yang didukung ScanBarcode?</strong><br>A: ScanBarcode mendukung 50+ format termasuk EAN, UPC, QR, WiFi, dll.</p>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>© 2026 ScanBarcode Pro - Pemindai Barcode #1 di Indonesia | scanbarcodepro.com | Dibuat dengan ❤️</p>
+</footer>
+
+<script>
+// ===== TOAST =====
+function toast(m,t='success'){let c=document.getElementById('toastContainer'),e=document.createElement('div');e.className='toast';e.style.background=t==='success'?'#10b981':t==='error'?'#ef4444':'#2563eb';e.textContent=m;c.appendChild(e);setTimeout(()=>{e.style.opacity='0';e.style.transition='.3s';setTimeout(()=>e.remove(),300)},3000)}
+
+// ===== PAGE NAVIGATION =====
+function showPage(n){
+    document.querySelectorAll('.page-section').forEach(e=>e.classList.remove('active'));
+    document.getElementById(n).classList.add('active');
+    document.getElementById('mobileMenu').classList.remove('open');
+    window.scrollTo(0,0);
+    if(n==='blog')renderBlogs();
+    if(n==='riwayat')renderHistory();
+    if(n==='generator')switchGenTab('qr');
+    if(n!=='scanner')stopScanner();
+}
+function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+function toggleTheme(){
+    document.documentElement.classList.toggle('dark');
+    document.getElementById('themeBtn').textContent=document.documentElement.classList.contains('dark')?'☀️':'🌙';
+    localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light');
+}
+
+// ===== BLOG DATA WITH IMAGES =====
+const blogs=[
+    {id:1,title:'Cara Memindai Barcode dengan ScanBarcode Pro',cat:'Tutorial ScanBarcode',date:'15 Maret 2026',img:'https://images.unsplash.com/photo-1586281380349-632531db7ed1?w=600&h=400&fit=crop'},
+    {id:2,title:'ScanBarcode: Panduan EAN vs UPC untuk Retail',cat:'Retail',date:'10 Maret 2026',img:'https://images.unsplash.com/photo-1553729459-afe8a1f19b2a?w=600&h=400&fit=crop'},
+    {id:3,title:'ScanBarcode & QRIS: Pembayaran Digital Indonesia',cat:'Fintech',date:'5 Maret 2026',img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop'},
+    {id:4,title:'ScanBarcode untuk Manajemen Inventori UMKM',cat:'Bisnis',date:'28 Feb 2026',img:'https://images.unsplash.com/photo-1553413077-190dd305871c?w=600&h=400&fit=crop'},
+    {id:5,title:'ScanBarcode WiFi QR: Share WiFi Mudah',cat:'Tools ScanBarcode',date:'20 Feb 2026',img:'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop'},
+    {id:6,title:'ScanBarcode: Tips Keamanan Hindari QR Palsu',cat:'Keamanan',date:'15 Feb 2026',img:'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&h=400&fit=crop'},
+    {id:7,title:'ScanBarcode di Industri Logistik Modern',cat:'Logistik',date:'10 Feb 2026',img:'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop'},
+    {id:8,title:'ScanBarcode vCard QR: Kartu Nama Digital',cat:'Tools ScanBarcode',date:'5 Feb 2026',img:'https://images.unsplash.com/photo-1586281380117-5a60cdc5c2a5?w=600&h=400&fit=crop'},
+    {id:9,title:'ScanBarcode & Teknologi Barcode 2026-2030',cat:'Teknologi',date:'1 Feb 2026',img:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop'},
+    {id:10,title:'ScanBarcode: Panduan Lengkap QR Generator',cat:'Tutorial ScanBarcode',date:'25 Jan 2026',img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop'}
+];
+
+function renderBlogs(){
+    document.getElementById('blogGrid').innerHTML=blogs.map(b=>`
+        <div class="blog-card">
+            <div class="blog-img" style="background-image:url('${b.img}')"><span>${b.title}</span></div>
+            <div class="blog-info">
+                <span class="blog-cat">${b.cat}</span>
+                <h3 class="blog-title">${b.title}</h3>
+                <span class="blog-date">📅 ${b.date} • 5 menit baca</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== SCANNER =====
+let qr=null,cur=null;
+async function startScanner(){
+    try{
+        qr=new Html5Qrcode("reader");let cams=await Html5QrCode.getCameras();
+        if(!cams||!cams.length){toast('Kamera tidak ditemukan!','error');return}
+        let cam=cams.find(c=>c.label.toLowerCase().includes('back'))||cams[0];
+        await qr.start(cam.id,{fps:10,qrbox:{width:250,height:250}},(t,r)=>{cur=t;showResult(t,r.result.format.formatName);saveHist(t,r.result.format.formatName);toast('✅ ScanBarcode mendeteksi!','success')},()=>{});
+        document.getElementById('btnStart').classList.add('hidden');document.getElementById('btnStop').classList.remove('hidden');
+        document.getElementById('scanStatus').innerHTML='<span style="color:#10b981">●</span> ScanBarcode aktif...';
+    }catch(e){toast('Izinkan akses kamera!','error');console.error(e)}
+}
+function stopScanner(){if(qr&&qr.isScanning)qr.stop().then(()=>{document.getElementById('btnStart').classList.remove('hidden');document.getElementById('btnStop').classList.add('hidden');document.getElementById('scanStatus').innerHTML='⚪ Kamera Mati'})}
+function scanImageFile(i){if(!i.files[0])return;new Html5Qrcode("reader").scanFile(i.files[0],!0).then(t=>{cur=t;showResult(t,'File');saveHist(t,'File')}).catch(()=>toast('Tidak ada barcode','error'));i.value=''}
+
+function showResult(t,f){
+    let type=t.match(/^https?:\/\//i)?'url':t.match(/^WIFI:/i)?'wifi':t.match(/^tel:/i)?'phone':t.match(/^mailto:/i)?'email':t.match(/^[0-9]{8,14}$/)?'product':'text';
+    let ic={url:'🔗',wifi:'📶',phone:'📞',email:'✉️',product:'📦',text:'📝'},lb={url:'Link',wifi:'WiFi',phone:'Telepon',email:'Email',product:'Kode Produk',text:'Teks'};
+    
+    document.getElementById('resultDisplay').className='result-box success';
+    document.getElementById('resultDisplay').innerHTML=`<div style="text-align:center"><div style="font-size:3rem">${ic[type]}</div><div style="font-size:12px;font-weight:700;color:#2563eb;margin:8px 0">${lb[type]}</div><div style="font-family:monospace;font-weight:600;word-break:break-all;background:#fff;padding:12px;border-radius:8px;font-size:14px">${t}</div></div>`;
+    
+    let a=`<button onclick="copyRes()" class="btn btn-dark" style="padding:10px;width:100%;font-size:14px">📋 Salin Teks</button>`;
+    if(type==='url')a+=`<button onclick="window.open('${t}','_blank')" class="btn btn-success" style="padding:10px;width:100%;font-size:14px">🔗 Buka Website</button>`;
+    if(type==='product')a+=`<button onclick="searchProduct('${t}')" class="btn btn-success" style="padding:10px;width:100%;font-size:14px">🔍 Cari di Google</button>`;
+    a+=`<button onclick="shareRes()" class="btn btn-outline" style="padding:10px;width:100%;font-size:14px">📤 Bagikan</button>`;
+    
+    document.getElementById('resultActions').innerHTML=a;document.getElementById('resultActions').style.display='flex';
+    document.getElementById('resultInfo').style.display='block';document.getElementById('resultInfo').innerHTML=`<strong>Format:</strong> ${f} | <strong>Waktu:</strong> ${new Date().toLocaleString('id-ID')} | <strong>Panjang:</strong> ${t.length} karakter`;
+    if(type==='product'){document.getElementById('productSearch').style.display='block';searchProduct(t)}else{document.getElementById('productSearch').style.display='none'}
+}
+function copyRes(){navigator.clipboard.writeText(cur).then(()=>toast('✅ Disalin!'))}
+function shareRes(){if(navigator.share)navigator.share({text:cur});else copyRes()}
+function searchProduct(code){document.getElementById('productSearch').innerHTML=`<div class="card" style="padding:14px;text-align:center;margin-top:10px"><p style="font-size:14px;margin-bottom:10px;font-weight:600">🔍 Cari produk: <strong>${code}</strong></p><a href="https://www.google.com/search?q=${encodeURIComponent(code)}+product" target="_blank" class="btn btn-primary btn-sm" style="margin:4px">🔍 Google</a><a href="https://www.google.com/search?q=${encodeURIComponent(code)}+barcode+info" target="_blank" class="btn btn-outline btn-sm" style="margin:4px">📦 Info Produk</a></div>`}
+
+// ===== HISTORY =====
+function saveHist(t,f){let h=JSON.parse(localStorage.getItem('sh')||'[]');h.unshift({text:t,format:f,time:new Date().toLocaleString('id-ID')});localStorage.setItem('sh',JSON.stringify(h.slice(0,100)))}
+function renderHistory(){
+    let h=JSON.parse(localStorage.getItem('sh')||'[]');
+    document.getElementById('historyEmpty').style.display=h.length?'none':'block';
+    document.getElementById('historyList').innerHTML=h.map(i=>`<div style="padding:10px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="flex:1;min-width:0"><span style="font-size:11px;font-weight:700;color:#2563eb;background:var(--hover);padding:2px 8px;border-radius:4px">${i.format}</span><span style="font-size:11px;color:#9ca3af;margin-left:6px">${i.time}</span><p style="font-family:monospace;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px">${i.text}</p></div><button onclick="navigator.clipboard.writeText('${i.text.replace(/'/g,"\\'")}');toast('Disalin!')" style="border:none;background:var(--bg);cursor:pointer;padding:8px;border-radius:6px;font-size:15px">📋</button></div>`).join('');
+}
+function clearHistory(){if(confirm('Hapus semua?')){localStorage.removeItem('sh');renderHistory();toast('Dihapus')}}
+function exportHistory(){
+    let h=JSON.parse(localStorage.getItem('sh')||'[]');if(!h.length){toast('Tidak ada data','error');return}
+    let c='Waktu,Format,Konten\n'+h.map(i=>`"${i.time}","${i.format}","${i.text.replace(/"/g,'""')}"`).join('\n');
+    let b=new Blob(['\uFEFF'+c],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='scanbarcode-history.csv';a.click();toast('✅ CSV diexport!')
+}
+
+// ===== GENERATOR =====
+let gBlob=null,gType='png';
+function switchGenTab(t){
+    document.getElementById('tabQr').style.cssText=`flex:1;padding:14px;font-weight:700;border:none;cursor:pointer;font-size:15px;background:${t==='qr'?'var(--hover)':'var(--card)'};color:${t==='qr'?'#2563eb':'var(--text)'}`;
+    document.getElementById('tabBc').style.cssText=`flex:1;padding:14px;font-weight:700;border:none;cursor:pointer;font-size:15px;background:${t==='barcode'?'var(--hover)':'var(--card)'};color:${t==='barcode'?'#2563eb':'var(--text)'}`;
+    document.getElementById('genControls').innerHTML=t==='qr'?`<textarea id="qrData" placeholder="Masukkan URL/teks untuk QR code ScanBarcode..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;min-height:100px;font-size:14px;background:var(--bg);color:var(--text);resize:vertical"></textarea><button onclick="genQR()" class="btn btn-primary" style="padding:12px;width:100%">📱 ScanBarcode Generate QR</button>`:`<select id="barFormat" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:var(--bg);color:var(--text)"><option value="CODE128">Code 128 (Umum)</option><option value="EAN13">EAN-13 (Produk)</option><option value="UPC">UPC-A</option><option value="CODE39">Code 39</option></select><input id="barData" placeholder="Masukkan angka barcode..." style="width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:var(--bg);color:var(--text);margin-top:8px"><button onclick="genBC()" class="btn btn-primary" style="padding:12px;width:100%;margin-top:8px">📊 ScanBarcode Generate Barcode</button>`;
+    document.getElementById('genPreview').innerHTML='<span style="color:#9ca3af;font-size:14px">Preview ScanBarcode</span>';document.getElementById('btnDownload').classList.add('hidden');gBlob=null;gType=t==='qr'?'png':'svg';
+}
+function genQR(){
+    let d=document.getElementById('qrData')?.value.trim();if(!d){toast('Masukkan data!','error');return}
+    document.getElementById('genPreview').innerHTML='';new QRCode(document.getElementById('genPreview'),{text:d,width:200,height:200});
+    setTimeout(()=>{let c=document.querySelector('#genPreview canvas');if(c){c.toBlob(b=>{gBlob=b;document.getElementById('btnDownload').classList.remove('hidden');toast('✅ QR siap!')},'image/png')}},300);
+}
+function genBC(){
+    let d=document.getElementById('barData')?.value.trim(),f=document.getElementById('barFormat')?.value||'CODE128';if(!d){toast('Masukkan data!','error');return}
+    document.getElementById('genPreview').innerHTML='';let s=document.createElementNS("http://www.w3.org/2000/svg","svg");document.getElementById('genPreview').appendChild(s);
+    try{JsBarcode(s,d,{format:f,height:80,displayValue:!0,fontSize:14});gBlob=new Blob([new XMLSerializer().serializeToString(s)],{type:'image/svg+xml'});document.getElementById('btnDownload').classList.remove('hidden');toast('✅ Barcode siap!')}catch(e){toast('Data tidak valid!','error')}
+}
+document.getElementById('btnDownload').addEventListener('click',()=>{if(!gBlob){toast('Generate dulu!','error');return}let a=document.createElement('a');a.href=URL.createObjectURL(gBlob);a.download=gType==='png'?'scanbarcode-qr.png':'scanbarcode-barcode.svg';a.click();toast('✅ Terunduh!')});
+
+// ===== INIT =====
+if(localStorage.getItem('theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('themeBtn').textContent='☀️'}
+switchGenTab('qr');
+</script>
+
+</body>
+</html>
